@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+    <!-- Подключение Bootstrap CSS с CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href=""> <img class="logo" src="{% static 'myapp/img/logo.png'%}"> Croup</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Товары</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Контакты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">О нас</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Личный кабинет</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container mt-5">
+        <h1>Личный кабинет</h1>
+
+        <!-- Информация о пользователе -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Информация о пользователе
+            </div>
+            <div class="card-body">
+                <p><strong>Имя:</strong></p>
+                <p><strong>Email:</strong></p>
+                <!-- Другие поля по вашему усмотрению -->
+            </div>
+        </div>
+
+        <!-- Список предыдущих заказов -->
+        <div class="card">
+            <div class="card-header">
+                Предыдущие заказы
+            </div>
+            <div class="card-body">
+                <!-- Здесь может быть список предыдущих заказов -->
+                <p>Список заказов пользователя...</p>
+            </div>
+        </div>
+    </div>
+
+   <!-- Подключение Bootstrap JS с CDN (если нужно) -->
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <script src="{% static 'myapp/js/script.js' %}"></script>
+</body>
+</html>
