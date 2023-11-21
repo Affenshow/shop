@@ -15,30 +15,44 @@
 <body>
     <!-- Навигационная панель -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{%static 'myapp/img/logo.png'%}"> Croup</a>
+        <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{% static 'myapp/img/logo.png' %}"> Croup</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'index' %}">Главная</a>
+                    <a class="nav-link" href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shop' %}">Товары</a>
+                    <a class="nav-link" href="{% url 'shop' %}"><i class="fas fa-shopping-cart"></i> Товары</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
+                    <a class="nav-link" href="{% url 'contacts' %}"><i class="fas fa-envelope"></i> Контакты</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">О нас</a>
+                    <a class="nav-link" href="{% url 'about' %}"><i class="fas fa-info-circle"></i> О нас</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'cabinet' %}" data-toggle="modal" data-target="#loginModal">Личный кабинет</a>
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'logout' %}" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-link nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Зарегистрироваться</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
+    
+    
 
    <!-- Слайдер -->
 <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
@@ -164,42 +178,6 @@
     Ⓒ Akparov Daniyar IS 22/2s
 </section>
 
-<!-- Всплывающая форма авторизации -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Вход</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Форма входа -->
-                <form action="" method="post" id="loginForm" class="needs-validation">
-                    <h3>Авторизация</h3>
-                        <div class="alert alert-danger" role="alert"></div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="username" class="form-control" id="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Пароль</label>
-                        <input type="password" name="password" class="form-control" id="password" required>
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" name="remember" class="form-check-input" id="remember-me">
-                        <label class="form-check-label" for="remember-me">Запомнить устройство</label>
-                    </div>
-                    <button type="submit" class="btn btn-secondary">Войти</button>
-                    <p><a href="">Забыли пароль?</a></p>
-                    <p><a href="{% url 'register' %}">Регистрация</a></p>
-                </form>
-                               
-            </div>
-        </div>
-    </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>

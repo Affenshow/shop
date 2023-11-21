@@ -1,22 +1,17 @@
-// Обработка отправки формы входа
-$(document).ready(function() {
-    $("#loginForm").submit(function(event) {
-        event.preventDefault();
+function rateProduct(rating, productId) {
+    // Удаляем все звезды для конкретного продукта
+    const stars = document.getElementById(`productRating${productId}`).children;
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].classList.remove('fas', 'fa-star');
+        stars[i].classList.add('far', 'fa-star');
+    }
 
-        // Проверка логина и пароля (замените на свою логику)
-        var email = $("#email").val();
-        var password = $("#password").val();
+    // Устанавливаем звезды согласно выбранному рейтингу
+    for (let i = 0; i < rating; i++) {
+        stars[i].classList.remove('far', 'fa-star');
+        stars[i].classList.add('fas', 'fa-star');
+    }
 
-        // Пример: При успешной авторизации перенаправить на cabinet.html
-        if (email === "danik12062002@mail.ru" && password === "123") {
-            window.location.href = "cabinet.html";
-        } else {
-            // Обработка ошибки входа (можно добавить уведомление)
-            alert("Неверный логин или пароль");
-        }
-
-        // Закрытие модального окна
-        $("#loginModal").modal("hide");
-    });
-});
-
+    // Здесь вы можете добавить логику сохранения рейтинга для конкретного продукта
+    console.log(`Выбран рейтинг ${rating} для продукта ${productId}`);
+}
