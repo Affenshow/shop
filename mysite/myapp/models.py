@@ -1,27 +1,24 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-class Address(models.Model):
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-
-
-    def __str__(self):
-        return f"{self.street}, {self.city}, {self.state} {self.zip_code}"
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True, blank=True)
-    phone = models.CharField(max_length=15, null=True, blank=True)
-
-    def __str__(self):
-        return self.user.username
-
-
-
-class Products(models.Model):
-    name = models.CharField(max_length=255)
+class ProductsCategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
+
+class Products(models.Model):
+    name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='images/products', blank=True)
+    description = models.TextField(blank=True)
+    short_description = models.CharField(max_length=255, blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    quantity = models.PositiveIntegerField(default=0)
+    category = models.ForeignKey(ProductsCategory, on_delete=models.CASCADE, default=1)  # Установите значение по умолчанию для категории
+
+    def __str__(self):
+        return self.name
+
+class ProductRating(models.Model):
+    product = models.ForeignKey('Products', on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)  # Предполагается, что рейтинг может быть целым числом от 0 до 5

@@ -15,37 +15,37 @@
 <body>
     <!-- Навигационная панель -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="{% url 'index' %}"> <img class="logo" src="{% static 'myapp/img/logo.png' %}"> Croup</a>
+        <a class="navbar-brand" href="{% url 'myapp:index' %}"> <img class="logo" src="{% static 'myapp/img/logo.png' %}"> Croup</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'index' %}"><i class="fas fa-home"></i> Главная</a>
+                    <a class="nav-link" href="{% url 'myapp:index' %}"><i class="fas fa-home"></i> Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'shop' %}"><i class="fas fa-shopping-cart"></i> Товары</a>
+                    <a class="nav-link" href="{% url 'myapp:shop' %}"><i class="fas fa-shopping-cart"></i> Товары</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'contacts' %}"><i class="fas fa-envelope"></i> Контакты</a>
+                    <a class="nav-link" href="{% url 'myapp:contacts' %}"><i class="fas fa-envelope"></i> Контакты</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'about' %}"><i class="fas fa-info-circle"></i> О нас</a>
+                    <a class="nav-link" href="{% url 'myapp:about' %}"><i class="fas fa-info-circle"></i> О нас</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
+                        <a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'logout' %}" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        <a href="" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Выйти</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-link nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                        <a class="btn btn-link nav-link" href="{% url 'users:login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-secondary nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Зарегистрироваться</a>
+                        <a class="btn btn-secondary nav-link" href="{% url 'users:register' %}"><i class="fas fa-user-plus"></i> Зарегистрироваться</a>
                     </li>
                 {% endif %}
             </ul>
@@ -109,11 +109,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Меню</h3>
                     <ul class="list-unstyled">
-                        <li><a href="index.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Главная</a></li>
-                        <li><a href="shop.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Товары</a></li>
-                        <li><a href="about.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>О нас</a></li>
-                        <li><a href="contacts.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Контакты</a></li>
-                        <li><a href="cabinet.html.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Личный кабинет</a></li>
+                        <li><a href="{%url 'myapp:index'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Главная</a></li>
+                        <li><a href="{%url 'myapp:shop'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Товары</a></li>
+                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>О нас</a></li>
+                        <li><a href="{%url 'myapp:contacts'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Контакты</a></li>
+                        <li><a href="{%url 'users:cabinet'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Личный кабинет</a></li>
                     </ul>
                 </div>
             </div>
@@ -122,9 +122,9 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Информация</h3>
                     <ul class="list-unstyled">
-                        <li><a href="about.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Новости</a></li>
-                        <li><a href="about.html" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Общая информация</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Адресная книга</a></li>
+                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Новости</a></li>
+                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Общая информация</a></li>
+                        <li><a href="{%url 'myapp:contacts'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Адресная книга</a></li>
                         <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>История заказов</a></li>
                         <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Избранное</a></li>
                     </ul>
