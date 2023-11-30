@@ -37,7 +37,10 @@
                         <a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        <form method="post" action="{% url 'users:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link"> <i class="fas fa-sign-out-alt"></i> Выйти</button>
+                        </form>
                     </li>
                 {% else %}
                     <li class="nav-item">

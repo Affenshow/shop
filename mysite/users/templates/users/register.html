@@ -45,63 +45,93 @@
                 {% csrf_token %}
                 <h3 class="card-title text-center mt-3 mb-3">Регистрация</h3>
             
-                <!-- Используйте user_form для полей пользователя -->
-                {{ user_form.username }}
-                {{ user_form.email }}
-                {{ user_form.password1 }}
-                {{ user_form.password2 }}
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}">Логин:</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <span class="text-danger">{{ form.username.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.first_name.id_for_label }}">Имя:</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <span class="text-danger">{{ form.first_name.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.last_name.id_for_label }}">Фамилия:</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <span class="text-danger">{{ form.last_name.errors }}</span>
+                    {% endif %}
+                </div>
             
-                <!-- Используйте profile_form для полей адреса -->
-                {{ profile_form.Address_form.street }}
-                {{ profile_form.Address_form.city }}
-                {{ profile_form.Address_form.country }}
-                {{ profile_form.Address_form.phone }}
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}">Email:</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <span class="text-danger">{{ form.email.errors }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}">Телефон:</label>
+                    {{ form.phone_number }}
+                    {% if form.phone_number.errors %}
+                        <span class="text-danger">{{ form.phone_number.errors }}</span>
+                    {% endif %}
+                </div>
             
-                <!-- Добавьте ошибки, если они есть -->
-                {% if user_form.errors %}
-                    <span class="text-danger">{{ user_form.errors }}</span>
-                {% endif %}
+                <div class="mb-3">
+                    <label for="{{ form.street.id_for_label }}">Улица:</label>
+                    {{ form.street }}
+                    {% if form.street.errors %}
+                        <span class="text-danger">{{ form.street.errors }}</span>
+                    {% endif %}
+                </div>
             
-                {% if profile_form.errors %}
-                    <span class="text-danger">{{ profile_form.errors }}</span>
-                {% endif %}
+                <div class="mb-3">
+                    <label for="{{ form.city.id_for_label }}">Город:</label>
+                    {{ form.city }}
+                    {% if form.city.errors %}
+                        <span class="text-danger">{{ form.city.errors }}</span>
+                    {% endif %}
+                </div>
             
-                {% if user_form.username.errors %}
-                    <span class="text-danger">{{ user_form.username.errors }}</span>
-                {% endif %}
+                <div class="mb-3">
+                    <label for="{{ form.country.id_for_label }}">Страна:</label>
+                    {{ form.country }}
+                    {% if form.country.errors %}
+                        <span class="text-danger">{{ form.country.errors }}</span>
+                    {% endif %}
+                </div>
             
-                {% if user_form.email.errors %}
-                    <span class="text-danger">{{ user_form.email.errors }}</span>
-                {% endif %}
+                <div class="mb-3">
+                    <label for="{{ form.password1.id_for_label }}">Пароль:</label>
+                    {{ form.password1 }}
+                    {% if form.password1.errors %}
+                        <span class="text-danger">{{ form.password1.errors }}</span>
+                    {% endif %}
+                </div>
             
-                {% if user_form.password1.errors %}
-                    <span class="text-danger">{{ user_form.password1.errors }}</span>
-                {% endif %}
-            
-                {% if user_form.password2.errors %}
-                    <span class="text-danger">{{ user_form.password2.errors }}</span>
-                {% endif %}
-            
-                {% if profile_form.Address_form.street.errors %}
-                    <span class="text-danger">{{ profile_form.Address_form.street.errors }}</span>
-                {% endif %}
-            
-                {% if profile_form.Address_form.city.errors %}
-                    <span class="text-danger">{{ profile_form.Address_form.city.errors }}</span>
-                {% endif %}
-            
-                {% if profile_form.Address_form.country.errors %}
-                    <span class="text-danger">{{ profile_form.Address_form.country.errors }}</span>
-                {% endif %}
-            
-                {% if profile_form.Address_form.phone.errors %}
-                    <span class="text-danger">{{ profile_form.Address_form.phone.errors }}</span>
-                {% endif %}
+                <div class="mb-3">
+                    <label for="{{ form.password2.id_for_label }}">Повторите пароль:</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                        <span class="text-danger">{{ form.password2.errors }}</span>
+                    {% endif %}
+                </div>
             
                 <button type="submit" class="btn btn-secondary btn-block mb-3">Зарегистрироваться</button>
             
                 <p class="text-center mb-3">Уже есть существующий аккаунт? <a href="{% url 'users:login' %}" class="btn btn-link">Войти</a></p>
             </form>
+            
+            
+
             
             
         </div>

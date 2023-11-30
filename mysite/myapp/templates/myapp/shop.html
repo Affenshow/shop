@@ -32,20 +32,23 @@
                 <a class="nav-link" href="{% url 'myapp:about' %}"><i class="fas fa-info-circle fa-lg"></i> О нас</a>
             </li>
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user fa-lg"></i> Личный кабинет</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="btn btn-secondary"><i class="fas fa-sign-out-alt fa-lg"></i> Выйти</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="btn btn-link nav-link" href="{% url 'users:login' %}"><i class="fas fa-sign-in-alt fa-lg"></i> Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-secondary nav-link" href="{% url 'users:register' %}"><i class="fas fa-user-plus fa-lg"></i> Зарегистрироваться</a>
-                </li>
-            {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'users:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link"> <i class="fas fa-sign-out-alt"></i> Выйти</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="btn btn-link nav-link" href="{% url 'users:login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-secondary nav-link" href="{% url 'users:register' %}"><i class="fas fa-user-plus"></i> Зарегистрироваться</a>
+                    </li>
+                {% endif %}
         </ul>
         <!-- Поиск -->
         <form class="form-inline">

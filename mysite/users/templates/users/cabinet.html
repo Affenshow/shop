@@ -38,7 +38,10 @@
                         <a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Выйти</a>
+                        <form method="post" action="{% url 'users:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link"> <i class="fas fa-sign-out-alt"></i> Выйти</button>
+                        </form>
                     </li>
                 {% else %}
                     <li class="nav-item">
@@ -53,51 +56,74 @@
     </nav>
 
     <!-- Основной контент -->
-<div class="container mt-5">
+<div class="container mt-0">
     <div class="row">
+        <!-- Фото пользователя и Логин пользователя -->
+        <div class="col-md-3 text-center">
+            <div class="profile-image-container">
+                {% if form.instance.image %}
+                    <img src="{{ form.instance.image.url }}" alt="User Photo" class="profile-image img-fluid profile-image-frame">
+                {% else %}
+                    <p class="no-photo-message">Фото не найдено</p>
+                {% endif %}
+            </div>
+            <h2>{{ user.username }}</h2>
+        </div>
+
+        <!-- Информация о пользователе -->
         <div class="col-md-6">
-            <!-- Кнопка выхода -->
-            <a href="" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Выйти</a>
-        </div>
-        <div class="col-md-6 text-right">
-            <h1 class="display-4">{{ username }}</h1>
-        </div>
-    </div>
+            <div class="card">
+                <div class="card-header">
+                    Информация о пользователе
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-    <!-- Информация о пользователе -->
-<div class="card mt-4">
-    <div class="card-header">
-        Информация о пользователе
-    </div>
-    <div class="card-body">
-        <p class="card-text"><strong>Имя:</strong> {{ user.first_name }}</p>
-        <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
-        <p class="card-text"><strong>Номер телефона:</strong> {{ user.userprofile.phone }}</p>
-        <p class="card-text"><strong>Город:</strong> {{ user.userprofile.Address.city }}</p>
-        <p class="card-text"><strong>Страна:</strong> {{ user.userprofile.Address.country }}</p>
-        <p class="card-text"><strong>Адрес:</strong> {{ user.userprofile.Address.street }}</p>
-        <!-- Другие поля по вашему усмотрению -->
-    </div>
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <p class="text-danger">{{ field.errors }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
 
-<!-- Список предыдущих заказов -->
-<div class="card mt-4">
-    <div class="card-header">
-        Предыдущие заказы
-    </div>
-    <div class="card-body">
-        <!-- Здесь может быть список предыдущих заказов -->
-        <p class="card-text">Список заказов пользователя...</p>
+                        <button type="submit" class="btn btn-secondary">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Предыдущие заказы -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Предыдущие заказы
+                </div>
+                <div class="card-body">
+                    <!-- Здесь может быть список предыдущих заказов -->
+                    <p class="card-text">Список заказов пользователя...</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 
 
-   <!-- Подключение Bootstrap JS с CDN (если нужно) -->
-   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-   <script src="{% static 'myapp/js/script.js' %}"></script>
+
+
+
+
+
+
+
+    <!-- Подключение Bootstrap JS с CDN (если нужно) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'myapp/js/script.js' %}"></script>
 </body>
 </html>
-
-
