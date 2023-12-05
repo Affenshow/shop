@@ -71,10 +71,17 @@ body {
     transition: color 0.25s;
 }
 
-.profile-image-frame {
-    border: 2px solid #007bff; /* Цвет границы, можно изменить на нужный вам */
-    border-radius: 8px; /* Радиус скругления углов */
-    padding: 10px;
-    display: inline-block;
+.card {
+    height: 100%;
+}
+
+.card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-text.description {
+    flex-grow: 1;
     overflow: hidden;
 }

@@ -55,7 +55,7 @@
         </div>
     </nav>
 
-    <!-- Основной контент -->
+   <!-- Основной контент -->
 <div class="container mt-0">
     <div class="row">
         <!-- Фото пользователя и Логин пользователя -->
@@ -95,21 +95,12 @@
                 </div>
             </div>
         </div>
-
-        <!-- Предыдущие заказы -->
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
-                    Предыдущие заказы
-                </div>
-                <div class="card-body">
-                    <!-- Здесь может быть список предыдущих заказов -->
-                    <p class="card-text">Список заказов пользователя...</p>
-                </div>
-            </div>
-        </div>
+        {% include 'myapp/basket.html' %}
     </div>
 </div>
+
+
+
 
 
 

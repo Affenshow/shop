@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm
 from .models import User
+from myapp.models import Basket
 
 def register(request):
     if request.method == 'POST':
@@ -28,7 +29,7 @@ def login(request):
 
             if user and user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(reverse('myapp:index'))
+                return HttpResponseRedirect(reverse('users:cabinet'))
     else:
         form = UserLoginForm()
 
@@ -45,8 +46,18 @@ def cabinet(request):
     else:
         form = UserProfileForm(instance=request.user)
     
-    context = {'form': form}
-    return render(request, 'users/cabinet.html', context)    
+    baskets = Basket.objects.filter(user=request.user)
+    total_quantity = sum(basket.quantity for basket in baskets)
+    total_sum = sum(basket.sum() for basket in baskets)
+    
+    context = {
+        'form': form,
+        'title': 'Croup - Личный кабинет',
+        'baskets': Basket.objects.filter(user=request.user),
+        'total_quantity': total_quantity,
+        'total_sum': total_sum,
+    }
+    return render(request, 'users/cabinet.html', context)
 
 
 def logout_user(request):
