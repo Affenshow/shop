@@ -50,17 +50,17 @@
                     </li>
                 {% endif %}
         </ul>
-        <!-- Поиск -->
-        <form class="form-inline">
-            <div class="input-group mr-2">
-                <input class="form-control" type="search" placeholder="Поиск..." id="search-box">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-secondary">
-                        <i class="fas fa-search"></i>
-                    </button>                    
-                </div>
-            </div>
-        </form>        
+        <!-- Форма поиска в шапке -->
+<form class="form-inline" action="{% url 'myapp:product_search' %}" method="get">
+    <div class="input-group mr-2">
+        <input class="form-control" type="search" placeholder="Поиск..." id="search-box" name="q" value="{{ query }}">
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>        
     </div>
 </nav>
 
@@ -109,8 +109,23 @@
                             <h5 class="card-title">{{ product.name }}</h5>
                             <p class="card-text description">{{ product.description }}</p>                            
                             <p class="card-text"><strong>Цена: {{ product.price }}тг</strong></p>
+
+                              <form method="post" action="{% url 'myapp:add_rating' product.id %}">
+                                {% csrf_token %}
+                                <label for="rating">Оцените товар:</label>
+                                <select id="rating" name="rating">
+                                  <option value="1">&#9733;</option>
+                                  <option value="2">&#9733;&#9733;</option>
+                                  <option value="3">&#9733;&#9733;&#9733;</option>
+                                  <option value="4">&#9733;&#9733;&#9733;&#9733;</option>
+                                  <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+                                </select>
+                                <button type="submit">Оценить</button>
+                              </form>                             
+                            
                             <a href="{% url 'myapp:basket_add' product.id %}" class="btn btn-secondary">Добавить в корзину</a>
                         </div>
+                        
                     </div>
                 </div>
 

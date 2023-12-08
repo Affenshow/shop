@@ -39,10 +39,21 @@ class UserLoginForm(AuthenticationForm):
         self.fields['username'].widget.attrs.update({'placeholder': 'Введите имя пользователя'})
         self.fields['password'].widget.attrs.update({'placeholder': 'Введите пароль'})
 
+# Ваш файл forms.py
+
+from django import forms
+from django.contrib.auth.models import User
+
 class UserProfileForm(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'readonly': True}))
-    image = forms.ImageField(widget=forms.FileInput(), required=False)
+    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'readonly': True}))
+    email = forms.EmailField(label='Электронная почта', widget=forms.EmailInput(attrs={'readonly': True}))
+    image = forms.ImageField(label='Изображение профиля', widget=forms.FileInput(), required=False)
+    first_name = forms.CharField(label='Имя')
+    last_name = forms.CharField(label='Фамилия')
+    phone_number = forms.CharField(label='Номер телефона')
+    street = forms.CharField(label='Улица')
+    city = forms.CharField(label='Город')
+    country = forms.CharField(label='Страна')
 
     class Meta:
         model = User
@@ -53,6 +64,7 @@ class UserProfileForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
         self.fields['image'].widget.attrs['class'] = 'custom-file-input'
+
 
 
 

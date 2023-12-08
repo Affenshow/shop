@@ -1,17 +1,55 @@
-function rateProduct(rating, productId) {
-    // Удаляем все звезды для конкретного продукта
-    const stars = document.getElementById(`productRating${productId}`).children;
-    for (let i = 0; i < stars.length; i++) {
-        stars[i].classList.remove('fas', 'fa-star');
-        stars[i].classList.add('far', 'fa-star');
-    }
+$(document).ready(function() {
+    $('.rating-form input').change(function() {
+        $(this).closest('form').submit();
+    });
 
-    // Устанавливаем звезды согласно выбранному рейтингу
-    for (let i = 0; i < rating; i++) {
-        stars[i].classList.remove('far', 'fa-star');
-        stars[i].classList.add('fas', 'fa-star');
-    }
+    $('.rating-form').submit(function(event) {
+        event.preventDefault();
+        const form = $(this);
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(response) {
+                // Обновляем звезды на странице
+                const productId = response.product_id;
+                const ratingStars = response.rating_stars;
+                const emptyStars = response.empty_stars;
+                const ratingSpan = $('#productRating' + productId);
+                ratingSpan.empty();
+                for (let i = 0; i < ratingStars; i++) {
+                    ratingSpan.append('<i class="fas fa-star"></i>');
+                }
+                for (let i = 0; i < emptyStars; i++) {
+                    ratingSpan.append('<i class="far fa-star"></i>');
+                }
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    });
+});
 
-    // Здесь вы можете добавить логику сохранения рейтинга для конкретного продукта
-    console.log(`Выбран рейтинг ${rating} для продукта ${productId}`);
-}
+
+
+    // Обработчик отправки формы поиска
+    $(document).ready(function () {
+        $('form#search-form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            var url = form.attr('action');
+            var formData = form.serialize();
+
+            // Загружаем результаты поиска в модальное окно
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: formData,
+                success: function (data) {
+                    $('#search-results').html(data);
+                    $('#searchModal').modal('show');
+                }
+            });
+        });
+    });

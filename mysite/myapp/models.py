@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.postgres.search import SearchVectorField
 from users.models import User
 
 class ProductsCategory(models.Model):
@@ -16,7 +16,14 @@ class Products(models.Model):
     short_description = models.CharField(max_length=255, blank=True)
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField(default=0)
-    category = models.ForeignKey(ProductsCategory, on_delete=models.CASCADE, default=1)  # Установите значение по умолчанию для категории
+    category = models.ForeignKey(ProductsCategory, on_delete=models.CASCADE, default=1)
+    # Добавляем поле для поиска
+    search_vector = SearchVectorField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Обновляем поле search_vector при сохранении
+        self.search_vector = SearchVector('name', 'description')
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.name} | {self.category.name}'
@@ -32,13 +39,36 @@ class Basket(models.Model):
     
     def sum(self):
         return self.quantity * self.product.price
+    
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    products = models.ManyToManyField('Products', through='OrderItem')
+    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Order {self.id} by {self.user.username}'
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey('Products', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'Order {self.order.id} - {self.product.name} ({self.quantity})'
+    
+    
 
 class ProductRating(models.Model):
     product = models.ForeignKey('Products', on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)  # Предполагается, что рейтинг может быть целым числом от 0 до 5
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.product.name} - {self.user.username}'
 
     def get_rating_stars(self):
-        return range(1, self.rating + 1)
+        return range(self.rating)
 
     def get_empty_stars(self):
-        return range(self.rating + 1, 6 - self.rating)
+        return range(5 - self.rating)

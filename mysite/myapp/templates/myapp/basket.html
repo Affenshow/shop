@@ -22,16 +22,21 @@
     </div>
 {% endfor %}
 
+<form method="post" action="{% url 'myapp:checkout' %}">
+    {% csrf_token %}
     <div class="card mb-3">
-    <div class="card-footer">
-        <p class="float-left">Итого</p>
-        <h4 class="float-right">{{total_sum}} тг</h4>
+        <div class="card-footer">
+            <p class="float-left">Итого</p>
+            <h4 class="float-right">{{ total_sum }} тг</h4>
         </div>
-        <button type="button" class="btn btn-success btn-lg float-right">Оформить</button>
-        </div>
+        <button type="submit" class="btn btn-success btn-lg float-right">Оформить</button>
+    </div>
+</form>
+
 </div>
 {% else %}
 <h4 class="mt-3 mb-3 text-center">
     Корзина пуста
 </h4>
+{% include 'myapp/checkout.html' %}
 {% endif %}

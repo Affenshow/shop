@@ -70,31 +70,71 @@
             <h2>{{ user.username }}</h2>
         </div>
 
-        <!-- Информация о пользователе -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    Информация о пользователе
-                </div>
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
+<!-- Информация о пользователе -->
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            Информация о пользователе
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
 
-                        {% for field in form %}
-                            <div class="form-group">
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {% if field.errors %}
-                                    <p class="text-danger">{{ field.errors }}</p>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-
-                        <button type="submit" class="btn btn-secondary">Сохранить</button>
-                    </form>
-                </div>
+                {% for field in form %}
+                    {% if field.name != 'image' %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <p class="text-danger">{{ field.errors }}</p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <!-- Пример для одного поля изображения -->
+<div class="form-group">
+    <label for="{{ form.image.id_for_label }}" class="col-form-label">
+        Изображение профиля
+        <div class="input-group">
+            {{ form.image }}
+            <div class="input-group-append">
+                <label class="custom-file-label" for="{{ form.image.id_for_label }}">Выберите файл</label>
+                <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#imageModal">
+                    Просмотр
+                </button>
             </div>
         </div>
+    </label>
+</div>
+
+<!-- Модальное окно для просмотра изображения -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Просмотр изображения</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {% if form.image.value %}
+                    <img src="{{ form.image.value.url }}" class="img-fluid" alt="Просмотр изображения">
+                {% else %}
+                    <p>Изображение не выбрано</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                <button type="submit" class="btn btn-secondary">Сохранить</button>
+            </form>
+        </div>
+    </div>
+</div>
+
         {% include 'myapp/basket.html' %}
     </div>
 </div>
