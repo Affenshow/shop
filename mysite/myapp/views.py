@@ -6,7 +6,7 @@ from .forms import OrderForm
 from django.contrib.postgres.search import SearchQuery
 from django.db.models import Q
 from django.contrib import messages
-from myapp.models import Products, ProductsCategory, Basket, ProductRating, Order, OrderItem
+from myapp.models import Products, ProductsCategory, Basket, ProductRating, Order, OrderItem, Discount
 
 
 def index(request):

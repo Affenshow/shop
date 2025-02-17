@@ -9,6 +9,8 @@ if defined _OLD_CODEPAGE (
 )
 
 set VIRTUAL_ENV=C:\Users\danik\OneDrive\Рабочий стол\git\shop\env
+set PATH=C:\Program Files\PostgreSQL\14\bin;%PATH%
+
 
 if not defined PROMPT set PROMPT=$P$G
 

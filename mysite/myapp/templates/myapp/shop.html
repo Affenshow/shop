@@ -107,10 +107,23 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text description">{{ product.description }}</p>                            
-                            <p class="card-text"><strong>Цена: {{ product.price }}тг</strong></p>
+                            <p class="card-text description">{{ product.description }}</p>
 
-                              <form method="post" action="{% url 'myapp:add_rating' product.id %}">
+                            {% if product.get_discounted_price < product.price %}
+                                <p class="card-text">
+                                    <strong>Цена: 
+                                        <span class="text-danger"><s>{{ product.price }}тг</s></span> 
+                                        {{ product.get_discounted_price }}тг
+                                    </strong>
+                                </p>
+                                <p class="card-text">
+                                    <small class="text-muted">Скидка действует до: {{ product.get_active_discount_end_date }}</small>
+                                </p>
+                            {% else %}
+                                <p class="card-text"><strong>Цена: {{ product.price }}тг</strong></p>
+                            {% endif %}
+
+                            <form method="post" action="{% url 'myapp:add_rating' product.id %}">
                                 {% csrf_token %}
                                 <label for="rating">Оцените товар:</label>
                                 <select id="rating" name="rating">
@@ -121,11 +134,10 @@
                                   <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
                                 </select>
                                 <button type="submit">Оценить</button>
-                              </form>                             
-                            
+                            </form>
+
                             <a href="{% url 'myapp:basket_add' product.id %}" class="btn btn-secondary">Добавить в корзину</a>
                         </div>
-                        
                     </div>
                 </div>
 
@@ -141,14 +153,19 @@
                             </div>
                             <div class="modal-body">
                                 <p>{{ product.description }}</p>
-                                <p><strong>Цена: {{ product.price }}тг</strong></p>
+                                {% if product.get_discounted_price < product.price %}
+                                    <p><strong>Цена: <span class="text-danger"><s>{{ product.price }}тг</s></span> {{ product.get_discounted_price }}тг</strong></p>
+                                    <p><small class="text-muted">Скидка действует до: {{ product.get_active_discount_end_date }}</small></p>
+                                {% else %}
+                                    <p><strong>Цена: {{ product.price }}тг</strong></p>
+                                {% endif %}
                                 <div class="form-group">
                                     <label for="quantity">Количество:</label>
                                     <input type="number" class="form-control" id="quantity" value="1">
                                 </div>
                                 <a href="{% url 'myapp:basket_add' product.id %}">
                                     <button class="btn btn-secondary btn-block">Добавить в корзину</button>
-                                    </a>                          
+                                </a>
                             </div>
                         </div>
                     </div>
