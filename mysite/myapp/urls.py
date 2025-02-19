@@ -1,6 +1,5 @@
-# urls.py
 from django.urls import path
-from .views import index, contacts, shop, about, basket_add, basket_delete, add_rating, product_search, checkout, order_success
+from .views import index, contacts, shop, about, basket_add, basket_delete, add_rating, product_search, checkout, order_success, basket_view
 
 app_name = 'myapp'
 
@@ -15,5 +14,6 @@ urlpatterns = [
     path('search/', product_search, name='product_search'),
     path('checkout/', checkout, name='checkout'),
     path('order_success/', order_success, name='order_success'),
+    path('basket/', basket_view, name='basket_view'),
     path("about/", about, name="about"),
 ]

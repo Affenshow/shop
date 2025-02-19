@@ -18,7 +18,6 @@ class OrderForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        # Если вы хотите, чтобы поле total_price было обязательным, вы можете добавить следующую строку:
-        # self.fields['total_price'].required = True
+
 
  

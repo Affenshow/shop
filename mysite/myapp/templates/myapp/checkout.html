@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Метатеги и прочее -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!-- Дополнительные стили вашего проекта -->
-    <title>Document</title>
+    <title>Оформление заказа</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Дополнительные стили вашего проекта -->
 </head>
 <body>
 
@@ -24,11 +23,8 @@
         <form method="post" action="{% url 'myapp:checkout' %}">
           {% csrf_token %}
           <div class="form-group">
-            <label for="{{ form.total_price.id_for_label }}">Итоговая сумма</label>
-            <input type="text" class="form-control" id="{{ form.total_price.id_for_label }}" name="{{ form.total_price.name }}" value="{{ form.total_price.value }}">
-            {% if form.total_price.errors %}
-              <div class="text-danger">{{ form.total_price.errors }}</div>
-            {% endif %}
+            <label for="total_price">Итоговая сумма</label>
+            <input type="text" class="form-control" id="total_price" name="total_price" value="{{ total_sum }}" readonly>
           </div>
           <button type="submit" class="btn btn-success">Оформить заказ</button>
         </form>
@@ -50,8 +46,9 @@
     </div>
   </div>
 {% endblock %}
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
