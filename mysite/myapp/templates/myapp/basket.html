@@ -30,7 +30,7 @@
     </div>
     {% endfor %}
 
-    <form method="post" action="{% url 'myapp:checkout' %}">
+    <form method="post" action="{% url 'payments:stripe_checkout' %}">
         {% csrf_token %}
         <div class="card mb-3">
             <div class="card-footer">
@@ -43,5 +43,5 @@
 </div>
 {% else %}
 <h4 class="mt-3 mb-3 text-center">Корзина пуста</h4>
-{% include 'myapp/checkout.html' %}
+
 {% endif %}

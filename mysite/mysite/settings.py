@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'myapp','users',
+    'myapp','users','payments',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +142,7 @@ LOGIN_URL = '/users/login'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51R156bGokAf29JgjvsMNlQnzNtTxhLeNI6USEQIs6CL8KdPOjlpcO0Hxsgw6S9HwliHDapG2NMJtvhXIyt2J1MIg00E8kEmlG2'
+STRIPE_SECRET_KEY = 'sk_test_51R156bGokAf29Jgjoth968QpHaCAqFOe5kGEmSFhNpNbVEUWd4PIGXkk9LZD8mdonuAabVsUuwE295ZuiJ3Sma2d00CbvMagSw'

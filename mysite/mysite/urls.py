@@ -9,6 +9,7 @@ urlpatterns = [
     #http://127.0.0.1:8000
    path('myapp/', include('myapp.urls', namespace='myapp')),
    path('users/', include('users.urls', namespace='users')),
+   path('payments/', include('payments.urls', namespace='payments')),
 ]
 
 
