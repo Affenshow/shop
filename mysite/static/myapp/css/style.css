@@ -55,3 +55,51 @@ body {
     display: inline-block;
     overflow: hidden;
 }
+
+section .fa-3x {
+    transition: transform 0.3s ease;
+}
+section .fa-3x:hover {
+    transform: scale(1.2);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+  }
+  
+  h5[data-toggle="collapse"] {
+    transition: color 0.3s;
+  }
+  
+  h5[data-toggle="collapse"]:hover {
+    color: #6c757d;
+  }
+
+
+  .profile-image-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #e9ecef; /* фон на случай отсутствия фото */
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* сохранит пропорции и обрежет лишнее */
+    display: block;
+  }
+  
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #6c757d;
+  }
+  

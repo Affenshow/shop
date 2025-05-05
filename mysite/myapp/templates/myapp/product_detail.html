@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ product.name }} — Croup</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Основные стили -->
+  <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+  <!-- Shop CSS (для .star-rating) -->
+  <link rel="stylesheet" href="{% static 'myapp/css/shop.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    /* Дополнительная анимация звёзд */
+    .star-rating label {
+      color: #ddd;
+      transition: color .3s ease, transform .3s ease;
+    }
+    .star-rating input:checked ~ label {
+      color: #ffc107;
+    }
+    .star-rating input:checked ~ label ~ label {
+      color: #ffc107;
+    }
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: #ffc107;
+      transform: scale(1.2);
+    }
+  </style>
+  <style>
+    /* Стили для аватарки в отзывах */
+    .review-avatar-container {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #e9ecef;
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+    .review-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .review-avatar-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      font-size: 1rem;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Навигация -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'myapp:index' %}">
+      <img class="logo" src="{% static 'myapp/img/logo.png' %}" alt="Logo"> Croup
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'myapp:index' %}"><i class="fas fa-home"></i> Главная</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'myapp:shop' %}"><i class="fas fa-shopping-cart"></i> Товары</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'myapp:contacts' %}"><i class="fas fa-envelope"></i> Контакты</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'myapp:about' %}"><i class="fas fa-info-circle"></i> О нас</a></li>
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user"></i> Кабинет</a></li>
+          <li class="nav-item">
+            <form method="post" action="{% url 'users:logout' %}">{% csrf_token %}
+              <button type="submit" class="btn btn-link nav-link"><i class="fas fa-sign-out-alt"></i> Выйти</button>
+            </form>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}"><i class="fas fa-sign-in-alt"></i> Войти</a></li>
+          <li class="nav-item"><a class="btn btn-secondary nav-link" href="{% url 'users:register' %}"><i class="fas fa-user-plus"></i> Зарегистрироваться</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container mt-5 pt-5">
+    <!-- Блок товара -->
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}">
+      </div>
+      <div class="col-md-6">
+        <h2>{{ product.name }}</h2>
+        {% if product.get_discounted_price < product.price %}
+          <p class="h4"><span class="text-danger"><s>{{ product.price }} тг</s></span> {{ product.get_discounted_price }} тг</p>
+          <p class="text-muted">Скидка до {{ product.get_active_discount_end_date }}</p>
+        {% else %}
+          <p class="h4">{{ product.price }} тг</p>
+        {% endif %}
+        <!-- Средний рейтинг -->
+        <div class="star-rating mb-3">
+          {% with avg=product.average_rating|floatformat:"0" %}
+            {% for i in "54321"|make_list %}
+              <input type="radio" disabled {% if i == avg %}checked{% endif %}>
+              <label><i class="fas fa-star"></i></label>
+            {% endfor %}
+          {% endwith %}
+          <small class="text-muted">({{ reviews.count }} отзывов)</small>
+        </div>
+        <p>{{ product.description }}</p>
+        <a href="{% url 'myapp:basket_add' product.id %}" class="btn btn-secondary">В корзину</a>
+      </div>
+    </div>
+
+    <!-- Отзывы -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <h3>Отзывы</h3>
+        <div class="reviews-container">
+          {% if reviews %}
+            {% for review in reviews %}
+              <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="review-avatar-container">
+                      {% if review.user.image %}
+                        <img src="{{ review.user.image.url }}" alt="{{ review.user.username }}" class="review-avatar">
+                      {% else %}
+                        <div class="review-avatar-placeholder">{{ review.user.username|slice:":1"|upper }}</div>
+                      {% endif %}
+                    </div>
+                    <strong>{{ review.user.username }}</strong>
+                    <small class="text-muted ml-auto">{{ review.created|date:"d.m.Y H:i" }}</small>
+                  </div>
+                  <!-- Рейтинг отзыва -->
+                  <div class="star-rating mb-2">
+                    {% for i in "54321"|make_list %}
+                      <input type="radio" disabled {% if review.rating|stringformat:"s" == i %}checked{% endif %}>
+                      <label><i class="fas fa-star"></i></label>
+                    {% endfor %}
+                  </div>
+                  <p>{{ review.comment }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <p class="text-muted">Пока нет отзывов.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Форма отзыва -->
+    {% if user.is_authenticated %}
+      <div class="row mt-4">
+        <div class="col-md-8">
+          <h4>Оставить отзыв</h4>
+          <form method="post" class="border p-3 bg-white rounded">
+            {% csrf_token %}
+            <div class="form-group mb-2">
+              <label>Комментарий:</label>
+              {{ form.comment }}
+            </div>
+            <div class="form-group mb-2">
+              <label>Оценка:</label><br>
+              <div class="star-rating">
+                {% for i in "54321"|make_list %}
+                  <input type="radio" id="rate-{{ product.id }}-{{ i }}" name="rating" value="{{ i }}">
+                  <label for="rate-{{ product.id }}-{{ i }}"><i class="fas fa-star"></i></label>
+                {% endfor %}
+              </div>
+            </div>
+            <button type="submit" class="btn btn-secondary">Отправить</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+
+  </main>
+
+  <!-- Подвал сайта -->
+  <section class="footer bg-dark text-white mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <h3>Меню</h3>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'myapp:index' %}" class="text-white"><i class="fas fa-home me-2"></i>Главная</a></li>
+            <li><a href="{% url 'myapp:shop' %}" class="text-white"><i class="fas fa-box-open me-2"></i>Товары</a></li>
+            <li><a href="{% url 'myapp:about' %}" class="text-white"><i class="fas fa-info-circle me-2"></i>О нас</a></li>
+            <li><a href="{% url 'myapp:contacts' %}" class="text-white"><i class="fas fa-envelope me-2"></i>Контакты</a></li>
+            <li><a href="{% url 'users:cabinet' %}" class="text-white"><i class="fas fa-user-circle me-2"></i>Личный кабинет</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h3>Информация</h3>
+          <ul class="list-unstyled">
+            <li><a href="{% url 'myapp:about' %}" class="text-white"><i class="fas fa-newspaper me-2"></i>Новости</a></li>
+            <li><a href="{% url 'myapp:about' %}" class="text-white"><i class="fas fa-info me-2"></i>Общая информация</a></li>
+            <li><a href="{% url 'myapp:contacts' %}" class="text-white"><i class="fas fa-book me-2"></i>Адресная книга</a></li>
+            <li><a href="#" class="text-white"><i class="fas fa-history me-2"></i>История заказов</a></li>
+            <li><a href="#" class="text-white"><i class="fas fa-heart me-2"></i>Избранное</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h3>Мы в соц.сетях</h3>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white"><i class="fab fa-facebook-f me-2"></i>Facebook</a></li>
+            <li><a href="#" class="text-white"><i class="fab fa-twitter me-2"></i>Twitter</a></li>
+            <li><a href="#" class="text-white"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+            <li><a href="#" class="text-white"><i class="fab fa-linkedin me-2"></i>LinkedIn</a></li>
+            <li><a href="#" class="text-white"><i class="fab fa-pinterest me-2"></i>Pinterest</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h3>Новостная рассылка</h3>
+          <p>Подпишитесь на последние обновления</p>
+          <form>
+            <input type="email" placeholder="ваш email" class="form-control mb-2">
+            <button type="submit" class="btn btn-secondary w-100">Подписаться</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="credit text-center py-2 bg-black text-white">
+    Ⓒ Akparov Daniyar IS 22/2s
+  </section>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

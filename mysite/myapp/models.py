@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.search import SearchVectorField, SearchVector
 from django.utils import timezone
+from django.conf import settings
 from users.models import User  # Предполагается, что модель пользователя находится в приложении users
 
 # Модель категории товаров
@@ -52,6 +53,46 @@ class Products(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.category.name}'
+    
+class Review(models.Model):
+    product = models.ForeignKey(
+        'Products',
+        related_name='reviews',
+        on_delete=models.CASCADE,
+        verbose_name='Товар'
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь'
+    )
+    rating = models.PositiveSmallIntegerField(
+        'Оценка',
+        choices=[(i, f'{i}★') for i in range(1,6)]
+    )
+    comment = models.TextField('Комментарий', max_length=1000)
+    created = models.DateTimeField('Дата', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+        ordering = ['-created']
+        unique_together = ('product', 'user')  # один отзыв от пользователя
+
+    def __str__(self):
+        return f'{self.product.name} — {self.user.username} ({self.rating}★)'
+    
+    #Обратная связь
+class Feedback(models.Model):
+    name      = models.CharField("Имя", max_length=100)
+    email     = models.EmailField("Email")
+    message   = models.TextField("Сообщение")
+    created   = models.DateTimeField("Дата отправки", auto_now_add=True)
+    response  = models.TextField("Ответ администратора", blank=True)
+    responded = models.BooleanField("Отвечено", default=False)
+
+    def __str__(self):
+        return f"{self.name} — {self.created:%d.%m.%Y}"
 
 # Модель скидки
 class Discount(models.Model):
@@ -91,24 +132,40 @@ class Basket(models.Model):
         """Общая сумма для этой позиции корзины с учетом количества товара и скидки"""
         return self.get_price() * self.quantity
 
-# Модель заказа
+
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Products, through='OrderItem')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    user              = models.ForeignKey(User, on_delete=models.CASCADE)
+    products          = models.ManyToManyField(Products, through='OrderItem')
+    total_price       = models.DecimalField(max_digits=10, decimal_places=2)
     created_timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'Order {self.id} by {self.user.username}'
 
-# Модель деталей заказа
+    class Meta:
+        ordering = ['-created_timestamp']
+
+
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    order    = models.ForeignKey(
+                   Order,
+                   on_delete=models.CASCADE,
+                   related_name='items'             # ← related_name
+               )
+    product  = models.ForeignKey(
+                   Products,
+                   on_delete=models.CASCADE,
+                   related_name='order_items'       # ← related_name
+               )
     quantity = models.PositiveIntegerField()
+    price    = models.DecimalField(
+                   max_digits=10,
+                   decimal_places=2,
+                   default=0                 # ← цена на момент заказа
+               )
 
     def __str__(self):
-        return f'Order {self.order.id} - {self.product.name} ({self.quantity})'
+        return f'Order {self.order.id} — {self.product.name} ({self.quantity})'
 
 # Модель рейтинга товара
 class ProductRating(models.Model):

@@ -37,6 +37,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:cabinet' %}"><i class="fas fa-user"></i> Личный кабинет</a>
                     </li>
+                    {% if user.is_staff %}
+                    <a class="nav-link" href="{% url 'myapp:analytics' %}">
+                        <i class="fas fa-chart-line"></i> Аналитика
+                      </a>
+                      {% endif %}
                     <li class="nav-item">
                         <form method="post" action="{% url 'users:logout' %}">
                             {% csrf_token %}
@@ -111,7 +116,29 @@
         </div>
     </div>
 </div>
-
+<section class="bg-light py-5">
+    <div class="container text-center">
+      <h2 class="mb-4">Почему выбирают нас?</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <i class="fas fa-shipping-fast fa-3x text-secondary mb-3"></i>
+          <h5 class="fw-bold">Быстрая доставка</h5>
+          <p>Мы доставим ваш заказ в течение 1–3 рабочих дней по всему Казахстану.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-thumbs-up fa-3x text-secondary mb-3"></i>
+          <h5 class="fw-bold">Качество и гарантия</h5>
+          <p>Вся продукция сертифицирована и сопровождается официальной гарантией.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-headset fa-3x text-secondary mb-3"></i>
+          <h5 class="fw-bold">Поддержка 24/7</h5>
+          <p>Наша команда всегда на связи — по телефону, email и в мессенджерах.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
 
 
 
@@ -126,11 +153,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Меню</h3>
                     <ul class="list-unstyled">
-                        <li><a href="{%url 'myapp:index'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Главная</a></li>
-                        <li><a href="{%url 'myapp:shop'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Товары</a></li>
-                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>О нас</a></li>
-                        <li><a href="{%url 'myapp:contacts'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Контакты</a></li>
-                        <li><a href="{%url 'users:cabinet'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Личный кабинет</a></li>
+                        <li><a href="{% url 'myapp:index' %}" class="text-decoration-none text-white"><i class="fas fa-home me-2"></i>Главная</a></li>
+                        <li><a href="{% url 'myapp:shop' %}" class="text-decoration-none text-white"><i class="fas fa-box-open me-2"></i>Товары</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-info-circle me-2"></i>О нас</a></li>
+                        <li><a href="{% url 'myapp:contacts' %}" class="text-decoration-none text-white"><i class="fas fa-envelope me-2"></i>Контакты</a></li>
+                        <li><a href="{% url 'users:cabinet' %}" class="text-decoration-none text-white"><i class="fas fa-user-circle me-2"></i>Личный кабинет</a></li>
                     </ul>
                 </div>
             </div>
@@ -139,11 +166,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Информация</h3>
                     <ul class="list-unstyled">
-                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Новости</a></li>
-                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Общая информация</a></li>
-                        <li><a href="{%url 'myapp:contacts'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Адресная книга</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>История заказов</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Избранное</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-newspaper me-2"></i>Новости</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-info me-2"></i>Общая информация</a></li>
+                        <li><a href="{% url 'myapp:contacts' %}" class="text-decoration-none text-white"><i class="fas fa-book me-2"></i>Адресная книга</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fas fa-history me-2"></i>История заказов</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fas fa-heart me-2"></i>Избранное</a></li>
                     </ul>
                 </div>
             </div>
@@ -152,11 +179,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Мы в соц.сетях</h3>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-facebook-f"></i> facebook</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-twitter"></i> twitter</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-instagram"></i> instagram</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-linkedin"></i> linkedin</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-pinterest"></i> pinterest</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-facebook-f me-2"></i>Facebook</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-twitter me-2"></i>Twitter</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-linkedin me-2"></i>LinkedIn</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-pinterest me-2"></i>Pinterest</a></li>
                     </ul>
                 </div>
             </div>

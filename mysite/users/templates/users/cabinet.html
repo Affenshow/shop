@@ -11,6 +11,31 @@
     <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
     <!-- Подключение Font Awesome для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        /* Аватарка профиля */
+        .profile-image-container {
+          width: 150px;
+          height: 150px;
+          overflow: hidden;
+          border-radius: 50%;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          background: #e9ecef;
+        }
+        .profile-image-container img,
+        .avatar-placeholder {
+          width: 100%;
+          height: 100%;
+          display: block;
+          object-fit: cover;
+        }
+        .avatar-placeholder {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 3rem;
+          color: #6c757d;
+        }
+      </style>
 </head>
 <body>
     <!-- Навигационная панель -->
@@ -58,17 +83,17 @@
    <!-- Основной контент -->
 <div class="container mt-0">
     <div class="row">
-        <!-- Фото пользователя и Логин пользователя -->
-        <div class="col-md-3 text-center">
-            <div class="profile-image-container">
-                {% if form.instance.image %}
-                    <img src="{{ form.instance.image.url }}" alt="User Photo" class="profile-image img-fluid profile-image-frame">
-                {% else %}
-                    <p class="no-photo-message">Фото не найдено</p>
-                {% endif %}
-            </div>
-            <h2>{{ user.username }}</h2>
+        <!-- Профиль пользователя -->
+      <div class="col-md-3 text-center">
+        <div class="profile-image-container mb-3 mx-auto">
+          {% if form.instance.image %}
+            <img src="{{ form.instance.image.url }}" alt="{{ user.username }}" class="">
+          {% else %}
+            <div class="avatar-placeholder">{{ user.username|slice:":1"|upper }}</div>
+          {% endif %}
         </div>
+        <h2>{{ user.username }}</h2>
+      </div>
 
 <!-- Информация о пользователе -->
 <div class="col-md-6">
@@ -139,8 +164,111 @@
     </div>
 </div>
 
+<div class="container mt-5 pt-5">
+    <div class="row">
+      <!-- Ваш существующий профиль (col-md-3 + col-md-6 + basket) -->
+      <div class="col-md-3 text-center">
+        <!-- ... фото и имя пользователя ... -->
+      </div>
+      <div class="col-md-6">
+        <!-- ... форма редактирования профиля ... -->
+      </div>
+      
+    </div>
 
+    <!-- === НОВЫЙ БЛОК: Ваши обращения === -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <h3>Ваши обращения</h3>
 
+        {% if feedbacks %}
+          {% for fb in feedbacks %}
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <p><strong>Сообщение:</strong><br>{{ fb.message }}</p>
+                {% if fb.responded %}
+                  <hr>
+                  <p><strong>Ответ:</strong><br>{{ fb.response }}</p>
+                  <small class="text-muted">Отвечено {{ fb.created|date:"d.m.Y H:i" }}</small>
+                {% else %}
+                  <small class="text-warning">Ожидает ответа</small>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-muted">У вас пока нет обращений.</p>
+        {% endif %}
+      </div>
+    </div>
+    <!-- === /Новый блок === -->
+
+  </div>
+
+<!-- Подвал сайта -->
+<section class="footer bg-dark text-white">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box d-flex flex-column justify-content-between">
+                    <h3>Меню</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'myapp:index' %}" class="text-decoration-none text-white"><i class="fas fa-home me-2"></i>Главная</a></li>
+                        <li><a href="{% url 'myapp:shop' %}" class="text-decoration-none text-white"><i class="fas fa-box-open me-2"></i>Товары</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-info-circle me-2"></i>О нас</a></li>
+                        <li><a href="{% url 'myapp:contacts' %}" class="text-decoration-none text-white"><i class="fas fa-envelope me-2"></i>Контакты</a></li>
+                        <li><a href="{% url 'users:cabinet' %}" class="text-decoration-none text-white"><i class="fas fa-user-circle me-2"></i>Личный кабинет</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="box d-flex flex-column justify-content-between">
+                    <h3>Информация</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-newspaper me-2"></i>Новости</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-info me-2"></i>Общая информация</a></li>
+                        <li><a href="{% url 'myapp:contacts' %}" class="text-decoration-none text-white"><i class="fas fa-book me-2"></i>Адресная книга</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fas fa-history me-2"></i>История заказов</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fas fa-heart me-2"></i>Избранное</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="box d-flex flex-column justify-content-between">
+                    <h3>Мы в соц.сетях</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-facebook-f me-2"></i>Facebook</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-twitter me-2"></i>Twitter</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-linkedin me-2"></i>LinkedIn</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-pinterest me-2"></i>Pinterest</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="box d-flex flex-column justify-content-between">
+                    <h3>Новостная рассылка</h3>
+                    <p>Подпишитесь на последние обновления</p>
+                    <form action="">
+                        <input type="email" name="" placeholder="введите ваш email" class="form-control mb-2">
+                        <input type="submit" value="подписаться" class="btn btn-secondary">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="credit text-center py-2">
+    Ⓒ Akparov Daniyar IS 22/2s
+</section>
 
 
 

@@ -85,3 +85,47 @@ body {
     flex-grow: 1;
     overflow: hidden;
 }
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+    transition: transform .3s ease;
+  }
+  .overlay-buttons {
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .card:hover .overlay-buttons {
+    opacity: 1;
+  }
+  
+
+/* Звёздная система */
+.star-rating {
+    display: inline-block;
+    font-size: 1.2rem;
+    direction: rtl;              /* для того, чтобы отмеченные звёзды подсвечивались слева */
+    unicode-bidi: bidi-override;
+  }
+  
+  .star-rating input {
+    display: none;               /* скрываем сами радио-кнопки */
+  }
+  
+  .star-rating label {
+    color: #ddd;
+    cursor: pointer;
+    display: inline-block;
+    transition: color .2s;
+  }
+  
+  .star-rating label:hover,
+  .star-rating label:hover ~ label,
+  .star-rating input:checked ~ label {
+    color: #ffc107;              /* подсвеченные звёзды */
+  }
+
+  /* временно отключаем оверлей-кнопки */
+.overlay-buttons {
+    display: none !important;
+  }
+  

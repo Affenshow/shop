@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Аналитика продаж — Croup</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="p-4">
+  <div class="container">
+    <h1 class="mb-4">Панель аналитики</h1>
+    <a href="javascript:history.back()" class="btn btn-secondary mb-4">&larr; Назад</a>
+
+    {% if last_orders %}
+      <h2>Последние заказы</h2>
+      <ul class="mb-4">
+        {% for ord in last_orders %}
+          <li>Заказ #{{ ord.id }} — {{ ord.created_timestamp|date:"d.m.Y H:i" }} — {{ ord.total_price|floatformat:0 }} тг</li>
+        {% empty %}
+          <li class="text-muted">Нет ни одного заказа.</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <!-- Ключевые показатели -->
+    <div class="row mb-5">
+      <div class="col-md-4">
+        <div class="card text-center p-3">
+          <h5>Всего заказов</h5>
+          <p class="display-4">{{ total_orders }}</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center p-3">
+          <h5>Выручка</h5>
+          <p class="display-4">{{ total_revenue|floatformat:0 }} тг</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card text-center p-3">
+          <h5>Средний чек</h5>
+          <p class="display-4">{{ avg_order_value|floatformat:0 }} тг</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Топ-5 продуктов -->
+    <h2>Топ-5 продуктов</h2>
+    <table class="table table-striped mb-5">
+      <thead>
+        <tr><th>Название</th><th>Продано шт.</th></tr>
+      </thead>
+      <tbody>
+        {% for prod in top_products %}
+        <tr>
+          <td>{{ prod.name }}</td>
+          <td>{{ prod.sold }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <!-- График динамики по месяцам -->
+    <h2>Динамика по месяцам</h2>
+    <canvas id="monthlyChart" height="100"></canvas>
+    <script type="text/javascript">
+        const labels  = JSON.parse('{{ labels_json|escapejs }}');
+        const dataRev = JSON.parse('{{ dataRev_json|escapejs }}');
+        const dataOrd = JSON.parse('{{ dataOrd_json|escapejs }}');
+      
+        const ctx = document.getElementById('monthlyChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [
+              { label: 'Выручка',      data: dataRev, backgroundColor: 'rgba(54,162,235,0.5)' },
+              { label: 'Кол-во заказов', data: dataOrd, backgroundColor: 'rgba(255,99,132,0.5)' }
+            ]
+          },
+          options: {
+            scales: {
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      </script>
+      
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 
     'myapp','users','payments',
 ]
@@ -115,11 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Almaty'
 
 USE_I18N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -142,6 +144,7 @@ LOGIN_URL = '/users/login'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51R156bGokAf29JgjvsMNlQnzNtTxhLeNI6USEQIs6CL8KdPOjlpcO0Hxsgw6S9HwliHDapG2NMJtvhXIyt2J1MIg00E8kEmlG2'

@@ -55,53 +55,100 @@
         </div>
     </nav>
 <!-- О нас -->
-<section class="about container mt-5">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="{% static 'myapp/img/about-img.jpg' %}" class="img-fluid" alt="About Image">
+<section class="about-section py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center">
+        
+        <!-- Картинка -->
+        <div class="col-md-6 mb-4 mb-md-0">
+          <div class="shadow rounded overflow-hidden">
+            <img src="{% static 'myapp/img/about-img.jpg' %}" class="img-fluid w-100" alt="О нас">
+          </div>
         </div>
+        
+        <!-- Текст -->
         <div class="col-md-6">
-            <div class="content">
-                <span>Добро пожаловать в наш магазин!</span>
-                <h3>Мы Сделаем Ваш Дом Еще Более Удивительным</h3>
-                <p>Интернет-магазин Croup рад вас приветствовать на сайте, мы надеемся что вам понравятся наши предложения для вас!</p>
-                <p>Хотим сделать вашу жизнь легче, а дом - красивее.</p>
-                <a href="#" class="btn btn-secondary">Подробнее</a>
-            </div>
+          <div class="content px-3">
+            <span class="text-uppercase text-muted small d-block mb-2"><i class="fas fa-store-alt mr-2 text-secondary"></i>О нас</span>
+            <h2 class="mb-3 font-weight-bold">Мы сделаем ваш дом еще более удивительным</h2>
+            <p class="text-muted">Интернет-магазин <strong>Croup</strong> рад приветствовать вас! Мы стремимся предложить лучшие решения для вашего комфорта и уюта.</p>
+            <p class="text-muted">Наша цель — делать вашу жизнь легче, а дом — уютнее и стильнее.</p>
+            <a href="#" class="btn btn-secondary mt-2 px-4">Подробнее</a>
+          </div>
         </div>
+  
+      </div>
     </div>
-</section>
+  </section>
+  
 
-<!-- Наши услуги -->
-<section class="services container mt-5">
-    <h1 class="title text-center mb-4"> <span>Наши услуги</span></h1>
-    <div class="box-container row justify-content-center">
-        <div class="col-md-4 mb-4">
-            <div class="box border rounded p-3"> <!-- Добавляем классы для контура и отступов -->
-                <img src="{% static 'myapp/img/serv-1.svg' %}" class="img-fluid" alt="Service Image">
-                <h3>Продажа продукта</h3>
-                <p>Переходите на категории товаров и наслаждайтесь покупкой.</p>
-                <a href="#" class="btn btn-secondary">Подробнее</a>
+<section class="py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center mb-5 font-weight-bold">Часто задаваемые вопросы</h2>
+      <div class="accordion" id="faqAccordion">
+  
+        <!-- Вопрос 1 -->
+        <div class="card mb-3 border-0 bg-light">
+          <div class="card-header bg-light border-0 p-0" id="headingOne">
+            <h5 class="mb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false">
+              <i class="fas fa-question-circle text-secondary mr-2"></i> Как оформить заказ?
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" data-parent="#faqAccordion">
+            <div class="card-body bg-white shadow-sm rounded">
+              Перейдите в раздел <strong>«Товары»</strong>, выберите нужную позицию и нажмите <em>«Купить»</em>. Далее следуйте шагам оформления.
             </div>
+          </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="box border rounded p-3">
-                <img src="{% static 'myapp/img/serv-2.svg' %}" class="img-fluid" alt="Service Image">
-                <h3>Проектирование</h3>
-                <p>После выбора товара, вы можете спроектировать свой продукт.</p>
-                <a href="#" class="btn btn-secondary">Подробнее</a>
+  
+        <!-- Вопрос 2 -->
+        <div class="card mb-3 border-0 bg-light">
+          <div class="card-header bg-light border-0 p-0" id="headingTwo">
+            <h5 class="mb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false">
+              <i class="fas fa-shipping-fast text-secondary mr-2"></i> Сколько длится доставка?
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
+            <div class="card-body bg-white shadow-sm rounded">
+              Обычно доставка занимает от <strong>1 до 3 рабочих дней</strong> в зависимости от вашего региона.
             </div>
+          </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="box border rounded p-3">
-                <img src="{% static 'myapp/img/serv-3.svg' %}" class="img-fluid" alt="Service Image">
-                <h3>24 / 7 поддержка</h3>
-                <p>Напишите нам о своей проблеме и наш консультант постарается вам помочь.</p>
-                <a href="#" class="btn btn-secondary">Подробнее</a>
+  
+        <!-- Вопрос 3 -->
+        <div class="card mb-3 border-0 bg-light">
+          <div class="card-header bg-light border-0 p-0" id="headingThree">
+            <h5 class="mb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false">
+              <i class="fas fa-shield-alt text-secondary mr-2"></i> Есть ли гарантия?
+            </h5>
+          </div>
+          <div id="collapseThree" class="collapse" data-parent="#faqAccordion">
+            <div class="card-body bg-white shadow-sm rounded">
+              Да, мы предоставляем <strong>официальную гарантию 12 месяцев</strong> на всю продукцию.
             </div>
+          </div>
         </div>
+  
+        <!-- Вопрос 4 -->
+        <div class="card mb-3 border-0 bg-light">
+          <div class="card-header bg-light border-0 p-0" id="headingFour">
+            <h5 class="mb-2 cursor-pointer" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false">
+              <i class="fas fa-undo text-secondary mr-2"></i> Можно ли вернуть товар?
+            </h5>
+          </div>
+          <div id="collapseFour" class="collapse" data-parent="#faqAccordion">
+            <div class="card-body bg-white shadow-sm rounded">
+              Вы можете вернуть товар в течение <strong>14 дней</strong> при условии сохранности упаковки и товарного вида.
+            </div>
+          </div>
+        </div>
+  
+      </div>
     </div>
-</section>
+  </section>
+  
+  
+  
 <!-- Подвал сайта -->
 <section class="footer bg-dark text-white">
 
@@ -112,11 +159,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Меню</h3>
                     <ul class="list-unstyled">
-                        <li><a href="{%url 'myapp:index'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Главная</a></li>
-                        <li><a href="{%url 'myapp:shop'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Товары</a></li>
-                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>О нас</a></li>
-                        <li><a href="{%url 'myapp:contacts'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Контакты</a></li>
-                        <li><a href="{%url 'users:cabinet'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Личный кабинет</a></li>
+                        <li><a href="{% url 'myapp:index' %}" class="text-decoration-none text-white"><i class="fas fa-home me-2"></i>Главная</a></li>
+                        <li><a href="{% url 'myapp:shop' %}" class="text-decoration-none text-white"><i class="fas fa-box-open me-2"></i>Товары</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-info-circle me-2"></i>О нас</a></li>
+                        <li><a href="{% url 'myapp:contacts' %}" class="text-decoration-none text-white"><i class="fas fa-envelope me-2"></i>Контакты</a></li>
+                        <li><a href="{% url 'users:cabinet' %}" class="text-decoration-none text-white"><i class="fas fa-user-circle me-2"></i>Личный кабинет</a></li>
                     </ul>
                 </div>
             </div>
@@ -125,11 +172,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Информация</h3>
                     <ul class="list-unstyled">
-                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Новости</a></li>
-                        <li><a href="{%url 'myapp:about'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Общая информация</a></li>
-                        <li><a href="{%url 'myapp:contacts'%}" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Адресная книга</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>История заказов</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fas fa-arrow-right"></i>Избранное</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-newspaper me-2"></i>Новости</a></li>
+                        <li><a href="{% url 'myapp:about' %}" class="text-decoration-none text-white"><i class="fas fa-info me-2"></i>Общая информация</a></li>
+                        <li><a href="{% url 'myapp:contacts' %}" class="text-decoration-none text-white"><i class="fas fa-book me-2"></i>Адресная книга</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fas fa-history me-2"></i>История заказов</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fas fa-heart me-2"></i>Избранное</a></li>
                     </ul>
                 </div>
             </div>
@@ -138,11 +185,11 @@
                 <div class="box d-flex flex-column justify-content-between">
                     <h3>Мы в соц.сетях</h3>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-facebook-f"></i> facebook</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-twitter"></i> twitter</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-instagram"></i> instagram</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-linkedin"></i> linkedin</a></li>
-                        <li><a href="#" class="text-decoration-none"> <i class="fab fa-pinterest"></i> pinterest</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-facebook-f me-2"></i>Facebook</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-twitter me-2"></i>Twitter</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-instagram me-2"></i>Instagram</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-linkedin me-2"></i>LinkedIn</a></li>
+                        <li><a href="#" class="text-decoration-none text-white"><i class="fab fa-pinterest me-2"></i>Pinterest</a></li>
                     </ul>
                 </div>
             </div>
