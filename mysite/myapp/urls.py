@@ -15,7 +15,9 @@ from .views import (
     product_detail,
     create_checkout_session,
     stripe_webhook,
-    analytics
+    analytics,
+
+    
 )
 
 app_name = 'myapp'
@@ -34,6 +36,9 @@ urlpatterns = [
     path('search/', product_search, name='product_search'),
 
     path('product/<int:pk>/', product_detail, name='product_detail'),
+
+
+
 
     # Кассовый процесс
     path('checkout/', checkout, name='checkout'),
